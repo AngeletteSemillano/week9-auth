@@ -33,15 +33,24 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
 
-    final email = TextField(
+    final email = TextFormField(
       key: const Key('emailField'),
       controller: emailController,
       decoration: const InputDecoration(
         hintText: "Email",
       ),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Please enter some text';
+        } else if (double.tryParse(value) == null) {
+          return 'Invalid age';
+        } else {
+          return null;
+        }
+      },
     );
 
-    final password = TextField(
+    final password = TextFormField(
       key: const Key('pwField'),
       controller: passwordController,
       obscureText: true,
