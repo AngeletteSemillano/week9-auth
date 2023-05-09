@@ -14,6 +14,24 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     TextEditingController emailController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
+    TextEditingController firstNameController = TextEditingController();
+    TextEditingController lastNameController = TextEditingController();
+
+    final firstName = TextField(
+      key: const Key('fnameField'),
+      controller: firstNameController,
+      decoration: const InputDecoration(
+        hintText: "First Name",
+      ),
+    );
+
+    final lastName = TextField(
+      key: const Key('lnameField'),
+      controller: lastNameController,
+      decoration: const InputDecoration(
+        hintText: "Last Name",
+      ),
+    );
 
     final email = TextField(
       key: const Key('emailField'),
@@ -37,7 +55,10 @@ class _LoginPageState extends State<LoginPage> {
       padding: const EdgeInsets.symmetric(vertical: 16.0),
       child: ElevatedButton(
         onPressed: () async {
-
+          await context.read<AuthProvider>().signIn(
+                emailController.text.trim(),
+                passwordController.text.trim(),
+              );
         },
         child: const Text('Log In', style: TextStyle(color: Colors.white)),
       ),
@@ -70,6 +91,8 @@ class _LoginPageState extends State<LoginPage> {
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 25),
             ),
+            firstName,
+            lastName,
             email,
             password,
             loginButton,

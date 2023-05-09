@@ -22,6 +22,26 @@ class _TodoPageState extends State<TodoPage> {
     // access the list of todos in the provider
     Stream<QuerySnapshot> todosStream = context.watch<TodoListProvider>().todos;
 
+    Stream<User?> userStream = context.watch<AuthProvider>().uStream;
+
+    return StreamBuilder(
+        stream: userStream,
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            return Center(
+              child: Text("Error encountered! ${snapshot.error}"),
+            );
+          } else if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (!snapshot.hasData) {
+            return const LoginPage();
+          }
+
+          // if user is logged in, display the scaffold containing the streambuilder for the todos
+          return displayScaffold(context, todosStream);
+        });
   }
 
   Scaffold displayScaffold(

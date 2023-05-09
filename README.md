@@ -24,3 +24,13 @@ lib
 * Models - contains the data model used
 * Providers - contains the Todo provider that contains the data and method logic
 * Screens - contains the screen/widgets used
+
+
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+
+// ...
+
+await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+);
